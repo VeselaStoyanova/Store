@@ -1,32 +1,32 @@
 # Prerequisites
-*.d
+Store/*.d
 
 # Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+Store/*.slo
+Store/*.lo
+Store/*.o
+Store/*.obj
 
 # Precompiled Headers
-*.gch
-*.pch
+Store/*.gch
+Store/*.pch
 
 # Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
+Store/*.so
+Store/*.dylib
+Store/*.dll
 
 # Fortran module files
-*.mod
-*.smod
+Store/*.mod
+Store/*.smod
 
 # Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
+Store/*.lai
+Store/*.la
+Store/*.a
+Store/*.lib
 
 # Executables
-*.exe
-*.out
-*.app
+Store/*.exe
+Store/*.out
+Store/*.app
