@@ -1,0 +1,13 @@
+﻿  Store.cpp
+C:\Users\vesel\source\repos\Store\Store\Store.cpp(30,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\vesel\source\repos\Store\Store\Store.cpp(46,30): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\vesel\source\repos\Store\Store\Store.cpp(63,28): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\vesel\source\repos\Store\Store\Store.cpp(71,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\vesel\source\repos\Store\Store\Store.cpp(82,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\vesel\source\repos\Store\Store\Store.cpp(153,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\vesel\source\repos\Store\Store\Store.cpp(157,29): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\vesel\source\repos\Store\Store\Store.cpp(266,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\vesel\source\repos\Store\Store\Store.cpp(273,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\vesel\source\repos\Store\Store\Store.cpp(318,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\vesel\source\repos\Store\Store\Store.cpp(78): warning C4715: 'Store::findSpaceByLocation': not all control paths return a value
+  Store.vcxproj -> C:\Users\vesel\source\repos\Store\Debug\Store.exe
