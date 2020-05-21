@@ -105,21 +105,6 @@ istream& operator>>(istream& input, Location& location)
 	return input;
 }
 
-/*
-void Store::enterAvailableQuantity(Product& product)
-{
-	double availableQuantity;
-	do
-	{
-		cout << "Enter the quantity of the product: " ;
-		cin >> availableQuantity;
-	}
-
-	while (availableQuantity <= 0);
-	product.setAvailableQuantity(availableQuantity);
-}
-*/
-
 //Принтираме мястото на продукта
 void Location::printLocation() const
 {

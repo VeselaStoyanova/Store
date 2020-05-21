@@ -10,6 +10,16 @@
 #include "ComandsExecutor.h"
 using namespace std;
 
+void tests()
+{
+	testProduct();
+	testLocation();
+	testSpace();
+	testStore();
+	testISODate();
+	testAuditStatement();
+}
+
 int main()
 {
 
@@ -17,25 +27,6 @@ int main()
 	Product product;
 	vector<Space>spaces = createSpaces();
 	Store store = Store(spaces);*/
-
-	//saveProductInfoInFile(outputFilePath, product);
-	//testProduct();
-	//testLocation();
-	//testSpace();
-	//testStore();
-	//print();
-	//showStartMenu();
-	//showAdvancedMenu();
-	//openFile();
-	//saveProductInfoInFile();
-	//Product* product = new Product();
-	//saveAsProductToFile(outputFilePath, &product, 3);
-	//testISODate();
-
     showMenu();
-	//print();
-	
-
-
 	return 0;
 }

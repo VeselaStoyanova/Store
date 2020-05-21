@@ -12,7 +12,7 @@ class Store
 private:
 	vector<Product> products;
 	vector<Space> spaces;
-	vector<AuditStatement> auditStatement;
+	vector<AuditStatement> auditStatements;
 	void removeProductFromSpace(Product product);
 
 public:

@@ -89,7 +89,7 @@ ISODate AuditStatement::getOperationDate() const
 ostream& operator<<(ostream& output, const AuditStatement& auditStatement)
 {
 	output << auditStatement.operationType << endl;
-	output << auditStatement.product << endl;
+	output << auditStatement.product;
 	output << auditStatement.operationDate << endl;
 
 	return output;
@@ -103,4 +103,5 @@ istream& operator>>(istream& input, AuditStatement& auditStatement)
 
 	return input;
 }
+
 

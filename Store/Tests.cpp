@@ -97,7 +97,23 @@ void testISODate()
 	cout << "2001-22-29 - " << boolalpha << date.constructDate("2001-22-29") << endl;
 	//Тестваме дали работи с невалиден ден
 	cout << "2001-02-55 - " << boolalpha << date.constructDate("2001-02-55") << endl;
+}
 
+void testAuditStatement()
+{
+	AuditStatement auditStatement = AuditStatement();
+	ISODate expiryDate;
+	expiryDate.constructDate("2020-05-11");
+	ISODate dateOfReceipt;
+	dateOfReceipt.constructDate("2020-05-30");
+	Product secondProduct = Product("Milk", expiryDate, dateOfReceipt, "Mia Stoyanova", "1 liter", 20, Location(1, 2, 3), "Milk - 1 l");
+	ISODate date;
+	date.constructDate("2020-05-30");
+	AuditStatement secondAuditStatement = AuditStatement("add", secondProduct, date);
+	AuditStatement thirdAuditStatement = secondAuditStatement;
+	cout << thirdAuditStatement << endl;
+	AuditStatement fourthAuditStatement = AuditStatement(secondAuditStatement);
+	cout << fourthAuditStatement << endl;
 }
 
 //Save file
@@ -144,4 +160,22 @@ void saveAsProductToFile(string filePath, Product* products, int numberOfProduct
 	{
 		printErrorMessage(filePath);
 	}
+}
+
+void testPrint()
+{
+	Location* location = new Location(1, 3, 5);
+	ISODate expiryDate;
+	expiryDate.constructDate("2020-05-11");
+	ISODate dateOfReceipt;
+	dateOfReceipt.constructDate("2020-05-30");
+	Product product = Product("Milk", expiryDate, dateOfReceipt, "Mia Stoyanova", "1 liter", 20, Location(1, 2, 3), "Milk - 1 l");
+	Product secondProduct = Product("Eggs", expiryDate, dateOfReceipt, "Sisi Stoyanova", "1 kg", 20, Location(2, 2, 3), "Eggs - 1 kg");
+	product.productPrint();
+	cout << "Location: " << endl;
+	location->printLocation();
+	cout << endl;
+	secondProduct.productPrint();
+	cout << "Location: " << endl;
+	location->printLocation();
 }

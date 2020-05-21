@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Product.h"
 #include "Location.h"
+#include "AuditStatement.h"
 
 using namespace std;
 
@@ -201,4 +202,5 @@ void Product::productPrint()const
 	cout << "Available quantity: " << this->availableQuantity << endl;
 	this->location.printLocation();
 	cout << "Comment: " << this->comment << endl;
+
 }

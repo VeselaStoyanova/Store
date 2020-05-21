@@ -6,7 +6,8 @@
 
 using namespace std;
 
-void showHelp() {
+void showHelp() 
+{
 	cout << endl;
 	cout << "The following commands are supported:" << endl;
 	cout << "Open <path>		opens an existing file or creates a new file" << endl;
@@ -21,9 +22,9 @@ void showAdvancedHelp()
 	cout << "The following commands are supported: " << endl;
 	cout << "Close			closes the currently opened file" << endl;
 	cout << "Save			saves the currently open file" << endl;
-	cout << "Save as			saves the currently open file in  <file>" << endl;
+	cout << "Save As			saves the currently open file in  <file>" << endl;
 	cout << "Help			prints this information" << endl;
-	cout << "Exit			exits the program" << endl;
+	cout << "Exit			exits the program" << endl;		
 	cout << endl;
 }
 
@@ -72,20 +73,6 @@ vector<Space> createSpaces()
 void print(Store& store)
 {
 	store.print();
-	/*Location* location = new Location(1, 3, 5);
-	ISODate expiryDate;
-	expiryDate.constructDate("2020-05-11");
-	ISODate dateOfReceipt;
-	dateOfReceipt.constructDate("2020-05-30");
-	Product product = Product("Milk", expiryDate, dateOfReceipt, "Mia Stoyanova", "1 liter", 20, Location(1, 2, 3), "Milk - 1 l");
-	Product secondProduct = Product("Eggs", expiryDate, dateOfReceipt, "Sisi Stoyanova", "1 kg", 20, Location(2, 2, 3), "Eggs - 1 kg");
-	product.productPrint();
-	cout << "Location: " << endl;
-	location->printLocation();
-	cout << endl;
-	secondProduct.productPrint();
-	cout << "Location: " << endl;
-	location->printLocation();*/
 }
 
 //Open file.
@@ -98,6 +85,7 @@ void openFileWithStore(string filePath, Store& storeToFill)
 	{
 		inputFileStream >> storeToFill;
 	}
+
 	else 
 	{
 		vector<Space>spaces = createSpaces();
@@ -109,17 +97,22 @@ void saveStoreInFile(Store& store, string filePath)
 {
 	ofstream outputFileStream;
 	outputFileStream.open(filePath, ios::out);
+
 	if (outputFileStream.is_open())
 	{
 		outputFileStream << store;
 	}
 }
 
-bool isCommandOpen(string choice) {
+bool isCommandOpen(string choice)
+{
 	return choice.size() > 5 && choice.substr(0, 5).compare("open ") == 0;
 }
 
-
+bool isFileSavedAs(string choice)
+{
+	return choice.size() > 8 && choice.substr(0, 8).compare("save as ") == 0;
+}
 
 //Когато започваме ще можем да отворим файл, да видим какви команди поддържа програмата и да излезнем от програмата.
 string showStartMenu()
@@ -145,6 +138,7 @@ string showAdvancedMenu()
 {
 	cout << "Enter one of the following options: " << endl;
 	string choice;
+
 	do
 	{
 		cout << "close" << endl;
@@ -160,7 +154,7 @@ string showAdvancedMenu()
 		getline(cin, choice);
 	}
 
-	while (choice.compare("close") != 0 && choice.compare("save") != 0 && choice.compare("save as") != 0
+	while (choice.compare("close") != 0 && choice.compare("save") != 0 && !isFileSavedAs(choice)
 		&& choice.compare("help")  != 0 && choice.compare("exit") != 0 && choice.compare("print") != 0
 		&& choice.compare("add") != 0 && choice.compare("remove") != 0 && choice.compare("log") != 0
 		&& choice.compare("clean") != 0);
@@ -185,7 +179,6 @@ void printErrorMessage(string filePath)
 //Open file.
 void openFile(string filePath)
 {
-	//const char* filePath = "myFile.txt";
 	ifstream inputFileStream;
 	inputFileStream.open(filePath, ios::in);
 
@@ -209,52 +202,71 @@ void openFile(string filePath)
 	}
 }
 
-string showParticularMenu(bool isFileOpen) {
-	if (!isFileOpen) {
+string showParticularMenu(bool isFileOpen) 
+{
+	if (!isFileOpen) 
+	{
 		return showStartMenu();
 	}
-	else {
+
+	else 
+	{
 		return showAdvancedMenu();
 	}
 }
 
-void showMenu() {
-
+void showMenu()
+{
 	bool isFileOpen = false;
 	Store store;
 	string filePath;
-
 	string choice;
 
-	while (choice.compare("exit") != 0) {
+	while (choice.compare("exit") != 0)
+	{
 		choice = showParticularMenu(isFileOpen);
 
 		if (isCommandOpen(choice))
 		{
 			filePath = choice.substr(5, choice.size() - 5);
-			bool isFileNameOnlyIntervals = filePath.find_first_not_of(' ') != std::string::npos;
-			if (isFileNameOnlyIntervals) {
 
+			//Проверяваме дали името на файла се състои само от интервали
+			bool isFileNameOnlyIntervals = filePath.find_first_not_of(' ') != std::string::npos;
+			if (isFileNameOnlyIntervals)
+			{
+				cout << "Open file." << endl;
+				openFileWithStore(filePath, store);
+				isFileOpen = true;
 			}
 
-			cout << "Open file." << endl;
-			openFileWithStore(filePath, store);
-			isFileOpen = true;
+			else
+			{
+				cout << "Error, not a valid name!" << endl;
+			}
+
 		}
-		else if (choice.compare("help") == 0)
+
+		else if (isFileOpen == false && choice.compare("help") == 0)
 		{
 			showHelp();
 		}
+
+		else if (isFileOpen == true && choice.compare("help") == 0)
+		{
+			showAdvancedHelp();
+		}
+
 		else if (choice.compare("exit") == 0)
 		{
 			cout << "Exiting the program..." << endl;
-			//	exit(0);
 		}
+
 		else if (choice.compare("close") == 0)
 		{
 			cout << "Successfully closed file." << endl;
 			isFileOpen = false;
 		}
+
 		else if (choice.compare("save") == 0)
 		{
 			saveStoreInFile(store, filePath);
@@ -262,11 +274,11 @@ void showMenu() {
 			isFileOpen = false;
 		}
 
-		else if (choice.compare("save as") == 0)
+		else if (isFileSavedAs(choice))
 		{
-			getline(cin, filePath);
+			filePath = choice.substr(8, choice.size() - 8);
 			saveStoreInFile(store, filePath);
-			cout << "Successfully saved file." << endl;
+			cout << "Successfully saved another file." << endl;
 			isFileOpen = false;
 		}
 

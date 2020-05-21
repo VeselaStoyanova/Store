@@ -2,6 +2,7 @@
 #include "Store.h"
 #include "Product.h"
 #include "Location.h"
+#include "AuditStatement.h"
 #include <limits>
 #include <string>
 #include <time.h>
@@ -22,7 +23,7 @@ Store::Store(vector<Space>spaces)
 //когато сетнем всички неща да продукта и дадем адд или ремуув да се записва и в счетоводната книга
 Store::Store(vector<AuditStatement> auditStatement)
 {
-	this->auditStatement = auditStatement;
+	this->auditStatements = auditStatement;
 }
 
 bool Store::addLocation(Product& product)
@@ -102,10 +103,17 @@ void Store::add()
 	enterAvailableQuantity(product);
 	enterComment(product);
 	bool isSuitableLocationFound = addLocation(product);
+
 	if (isSuitableLocationFound) 
 	{
 		this->products.push_back(product);
+		string currentDateString = currentDateTime();
+		ISODate currentDate;
+		currentDate.constructDate(currentDateString);
+		AuditStatement auditStatement = AuditStatement("add", product, currentDate);
+		this->auditStatements.push_back(auditStatement);
 	}
+
 	else 
 	{
 		cout << "No suitable location was found for the product: " << endl << product << endl;
@@ -119,17 +127,18 @@ void Store::clean()
 	ISODate currentDate;
 	currentDate.constructDate(currentDateString);
 	
-	for (auto it = products.begin(); it != products.end(); )
+	for (auto it = products.begin(); it != products.end();)
 	{
 		ISODate date = it->getExpiryDate();
 		if (date <= currentDate)
 		{
-		
 			removeProductFromSpace(*it);
 			cout << "Removed product: " << *it << endl;
 			it = products.erase(it);
 		}
-		else {
+		
+		else 
+		{
 			it++;
 		}
 	}
@@ -266,13 +275,21 @@ ostream& operator<<(ostream& output, const Store& store)
 	for (int i = 0; i < store.products.size(); i++)
 	{
 		output << store.products[i];
+		//output << store.auditStatement[i];
 	}
 
-	output << store.spaces.size()<<endl;
+	output << store.spaces.size() << endl;
 
 	for (int i = 0; i < store.spaces.size(); i++)
 	{
 		output << store.spaces[i];
+	}
+
+	output << store.auditStatements.size() << endl;
+
+	for (int i = 0; i < store.auditStatements.size(); i++)
+	{
+		output << store.auditStatements[i];
 	}
 
 	return output;
@@ -287,6 +304,10 @@ istream& operator>>(istream& input, Store& store)
 	if (store.spaces.size() > 0) 
 	{
 		store.spaces.clear();
+	}
+	if (store.auditStatements.size() > 0)
+	{
+		store.auditStatements.clear();
 	}
 
 	string productsSizeStr;
@@ -303,12 +324,25 @@ istream& operator>>(istream& input, Store& store)
 	string spacesSizeStr;
 	getline(input, spacesSizeStr);
 	int spacesSize = stoi(spacesSizeStr);
+
 	for (int i = 0; i < spacesSize; i++)
 	{
 		Space s;
 		input >> s;
 		store.spaces.push_back(s);
 	}
+
+	string auditStatementSizeStr;
+	getline(input, auditStatementSizeStr);
+	int auditStatementSize = stoi(auditStatementSizeStr);
+
+	for (int i = 0; i < auditStatementSize; i++)
+	{
+		AuditStatement auditSt;
+		input >> auditSt;
+		store.auditStatements.push_back(auditSt);
+	}
+
 	return input;
 }
 

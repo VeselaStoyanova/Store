@@ -14,3 +14,5 @@ void testStore();
 void testISODate();
 void saveProductInfoInFile(string outputFilePath, Product product);
 void saveAsProductToFile(string filePath, Product* products, int numberOfProducts);
+void testAuditStatement();
+void testPrint();
