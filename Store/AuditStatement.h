@@ -34,4 +34,5 @@ public:
 
 	friend ostream& operator<<(ostream& output, const AuditStatement& auditStatement);
 	friend istream& operator>>(istream& input, AuditStatement& auditStatement);
+	void printAuditStatement();
 };

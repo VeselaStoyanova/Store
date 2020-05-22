@@ -104,4 +104,9 @@ istream& operator>>(istream& input, AuditStatement& auditStatement)
 	return input;
 }
 
-
+void AuditStatement::printAuditStatement()
+{
+	cout << "Operation type: " << this->operationType << endl;
+	cout << "Product: " << this->product;
+	cout << "Operation date: " << this->operationDate << endl;
+}

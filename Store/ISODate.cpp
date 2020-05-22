@@ -78,7 +78,6 @@ void ISODate::copy(const ISODate& other)
     this->date = other.date;
 }
 
-
 ostream& operator<<(ostream& output, const ISODate& isoDate)
 {
     output << isoDate.date;

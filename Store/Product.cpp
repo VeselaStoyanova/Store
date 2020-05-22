@@ -202,5 +202,5 @@ void Product::productPrint()const
 	cout << "Available quantity: " << this->availableQuantity << endl;
 	this->location.printLocation();
 	cout << "Comment: " << this->comment << endl;
-
+	cout << endl;
 }

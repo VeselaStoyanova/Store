@@ -25,6 +25,11 @@ void showAdvancedHelp()
 	cout << "Save As			saves the currently open file in  <file>" << endl;
 	cout << "Help			prints this information" << endl;
 	cout << "Exit			exits the program" << endl;		
+	cout << "Print			prints information for the current products in the store" << endl;
+	cout << "Add			adds new product in the store" << endl;
+	cout << "Remove			removes a product from the store" << endl;
+	cout << "Log <from> <to>  prints information for the changes in availability" << endl;
+	cout << "Clean			clears the store of all expired products" << endl;
 	cout << endl;
 }
 
@@ -70,12 +75,14 @@ vector<Space> createSpaces()
 	return spaces;
 }
 
+//Функция print
+//Извежда информация за наличните продукти в склада.
 void print(Store& store)
 {
 	store.print();
 }
 
-//Open file.
+//Отваряне на файл
 void openFileWithStore(string filePath, Store& storeToFill)
 {
 	ifstream inputFileStream;
@@ -93,6 +100,7 @@ void openFileWithStore(string filePath, Store& storeToFill)
 	}
 }
 
+//Запазване във файл.
 void saveStoreInFile(Store& store, string filePath) 
 {
 	ofstream outputFileStream;
@@ -114,13 +122,22 @@ bool isFileSavedAs(string choice)
 	return choice.size() > 8 && choice.substr(0, 8).compare("save as ") == 0;
 }
 
+bool isCommandLogFromTo(string choice)
+{
+	string sampleDates = "log 0000-00-00 0000-00-00";
+	float commandLength = sampleDates.size();
+	return choice.size() == commandLength && choice.substr(0, 4).compare("log ") == 0;
+}
+
 //Когато започваме ще можем да отворим файл, да видим какви команди поддържа програмата и да излезнем от програмата.
 string showStartMenu()
 {
-	cout << "Enter one of the following options:" << endl;
+	cout << "Enter one of the following options:" ;
 	string choice;
+
 	do
 	{
+		cout << endl;
 		cout << "open <path to file>" << endl;
 		cout << "help" << endl;
 		cout << "exit" << endl;
@@ -136,11 +153,13 @@ string showStartMenu()
 //да запишем промените в друг файл, да видим какви команди поддържа програмата и да излезнем от програмата.
 string showAdvancedMenu()
 {
-	cout << "Enter one of the following options: " << endl;
+	cout << endl;
+	cout << "Enter one of the following options: ";
 	string choice;
 
 	do
 	{
+		cout << endl;
 		cout << "close" << endl;
 		cout << "save" << endl;
 		cout << "save as" << endl;
@@ -152,11 +171,12 @@ string showAdvancedMenu()
 		cout << "log <from> <to>" << endl;
 		cout << "clean" << endl;
 		getline(cin, choice);
+		cout << endl;
 	}
 
 	while (choice.compare("close") != 0 && choice.compare("save") != 0 && !isFileSavedAs(choice)
 		&& choice.compare("help")  != 0 && choice.compare("exit") != 0 && choice.compare("print") != 0
-		&& choice.compare("add") != 0 && choice.compare("remove") != 0 && choice.compare("log") != 0
+		&& choice.compare("add") != 0 && choice.compare("remove") != 0 && !isCommandLogFromTo(choice)
 		&& choice.compare("clean") != 0);
 
 	return choice;
@@ -176,7 +196,7 @@ void printErrorMessage(string filePath)
 	cerr << "There was a problem opening file with name: " << filePath << endl;
 }
 
-//Open file.
+//Отваряне на файл.
 void openFile(string filePath)
 {
 	ifstream inputFileStream;
@@ -202,6 +222,28 @@ void openFile(string filePath)
 	}
 }
 
+//Функцията log <from> <to>.
+//Извежда спаравка за всички промени в наличносттаа в периода от дата <from> до дата <to>.
+void logFromTo(string choice, Store& store)
+{
+	// Примерен потребителски вход - log 2020-02-02 2021-05-05
+
+	//Конструираме fromDate от стринг
+	string fromDateString = choice.substr(4, 10);
+	ISODate fromDate;
+	fromDate.constructDate(fromDateString);
+
+	//Конструираме toDate от стринг
+	string toDateString = choice.substr(15, 10);
+	ISODate toDate;
+	toDate.constructDate(toDateString);
+
+	store.logFromTo(fromDate, toDate, store);
+}
+
+//Проверяваме дали имаме отворен файл.
+//Ако нямаме, показваме showStartMenu.
+//Ако имаме, показваме showAdvancedMenu.
 string showParticularMenu(bool isFileOpen) 
 {
 	if (!isFileOpen) 
@@ -222,6 +264,7 @@ void showMenu()
 	string filePath;
 	string choice;
 
+	//Проверяваме дали командата ни е exit.
 	while (choice.compare("exit") != 0)
 	{
 		choice = showParticularMenu(isFileOpen);
@@ -232,6 +275,7 @@ void showMenu()
 
 			//Проверяваме дали името на файла се състои само от интервали
 			bool isFileNameOnlyIntervals = filePath.find_first_not_of(' ') != std::string::npos;
+
 			if (isFileNameOnlyIntervals)
 			{
 				cout << "Open file." << endl;
@@ -303,10 +347,9 @@ void showMenu()
 			cout << "Trqbva da napisha funkciqta" << endl;
 		}
 
-		else if (choice.compare("log") == 0)
+		else if (isCommandLogFromTo(choice))
 		{
-			cout << "LOG FROM TO" << endl;
-			cout << "Trqbva da napisha funkciqta" << endl;
+			logFromTo(choice, store);
 		}
 
 		else if (choice.compare("clean") == 0)

@@ -14,13 +14,13 @@ Store::Store()
 	
 }
 
+//Създаваме вектор от space-ове.
 Store::Store(vector<Space>spaces)
 {
 	this->spaces = spaces;
 }
 
-//вектор в стор от auditStatement-и 
-//когато сетнем всички неща да продукта и дадем адд или ремуув да се записва и в счетоводната книга
+//Създаваме вектор от auditStatement-и.
 Store::Store(vector<AuditStatement> auditStatement)
 {
 	this->auditStatements = auditStatement;
@@ -33,6 +33,8 @@ bool Store::addLocation(Product& product)
 		bool areNamesEqual = products[i].getName().compare(product.getName()) == 0;
 		bool areExpiryDatesEqual = (products[i].getExpiryDate() == product.getExpiryDate());
 
+		//Проверяваме дали имената на продуктите са еднакви и дали сроковете им на годност са равни.
+		//Ако имената са еднакви и сроковете на годност са равни, то слагаме продуктите на едно и също място.
 		if (areNamesEqual && areExpiryDatesEqual)
 		{
 			Location location = products[i].getLocation();
@@ -41,6 +43,7 @@ bool Store::addLocation(Product& product)
 			bool hasAvailableQuantityInSpace = space.getAvailableQuantity() >= product.getAvailableQuantity();
 			bool areUnitsTheSame = space.getUnit() == product.getUnit();
 
+			//Проверяваме дали имаме достатъчно място да сложим продуктите с еднакви имена и еднакъв срок на годност на едно и също място.
 			if (hasAvailableQuantityInSpace && areUnitsTheSame)
 			{
 				product.setLocation(location);
@@ -52,6 +55,7 @@ bool Store::addLocation(Product& product)
 	}
 
 	Space* space = findFirstAvailableSpace(product);
+
 	if (space == nullptr)
 	{
 		return false;
@@ -84,6 +88,9 @@ Space* Store::findFirstAvailableSpace(Product product)
 	{
 		bool hasAvailableQuantityInSpace = spaces[i].getAvailableQuantity() >= product.getAvailableQuantity();
 		bool areUnitsTheSame = spaces[i].getUnit() == product.getUnit();
+		
+		//Половината склад сме задали да се запълва с продукти в литри, а другата половина - в килограми.
+		//Проверяваме дали имаме достатъчно място и дали мерната единица на продуктите е една и съща.
 		if (hasAvailableQuantityInSpace && areUnitsTheSame)
 		{
 			return &spaces[i];
@@ -117,6 +124,31 @@ void Store::add()
 	else 
 	{
 		cout << "No suitable location was found for the product: " << endl << product << endl;
+	}
+}
+
+void Store::logFromTo(ISODate fromDate, ISODate toDate, Store& store)
+{
+	if (fromDate <= toDate)
+	{
+		for (int i = 0; i < auditStatements.size(); i++)
+		{
+			if (auditStatements[i].getOperationDate() >= fromDate && auditStatements[i].getOperationDate() <= toDate)
+			{
+				store.auditStatements[i].printAuditStatement();
+			}
+
+			else 
+			{
+				cout << "There is no operation." << endl;
+				//break;
+			}
+		}
+	}
+
+	else if(fromDate > toDate)
+	{
+		cout << "Error, bad input!" << endl;
 	}
 }
 
@@ -275,7 +307,6 @@ ostream& operator<<(ostream& output, const Store& store)
 	for (int i = 0; i < store.products.size(); i++)
 	{
 		output << store.products[i];
-		//output << store.auditStatement[i];
 	}
 
 	output << store.spaces.size() << endl;

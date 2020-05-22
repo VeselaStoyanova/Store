@@ -1,3 +1,6 @@
-﻿  ComandsExecutor.cpp
-D:\FMI\Github\Store\Store\ComandsExecutor.cpp(66,32): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+﻿  Store.cpp
+D:\FMI\Github\Store\Store\Store.cpp(50,30): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+D:\FMI\Github\Store\Store\Store.cpp(68,28): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+D:\FMI\Github\Store\Store\Store.cpp(198,29): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+D:\FMI\Github\Store\Store\Store.cpp(83): warning C4715: 'Store::findSpaceByLocation': not all control paths return a value
   Store.vcxproj -> D:\FMI\Github\Store\x64\Debug\Store.exe

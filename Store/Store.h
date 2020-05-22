@@ -19,6 +19,7 @@ public:
 	Store();
 	void print();
 	void add();
+	void logFromTo(ISODate fromDate, ISODate toDate, Store& store);
 	void clean();
 	const string currentDateTime();
 	bool addLocation(Product& product);
