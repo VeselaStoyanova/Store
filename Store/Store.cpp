@@ -129,6 +129,7 @@ void Store::add()
 
 void Store::logFromTo(ISODate fromDate, ISODate toDate, Store& store)
 {
+	int counter = 0;
 	if (fromDate <= toDate)
 	{
 		for (int i = 0; i < auditStatements.size(); i++)
@@ -136,13 +137,13 @@ void Store::logFromTo(ISODate fromDate, ISODate toDate, Store& store)
 			if (auditStatements[i].getOperationDate() >= fromDate && auditStatements[i].getOperationDate() <= toDate)
 			{
 				store.auditStatements[i].printAuditStatement();
+				counter++;
 			}
+		}
 
-			else 
-			{
-				cout << "There is no operation." << endl;
-				//break;
-			}
+		if (counter == 0)
+		{
+			cout << "There is no operation." << endl;
 		}
 	}
 
