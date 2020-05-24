@@ -177,6 +177,49 @@ void Store::clean()
 	}
 }
 
+void Store::remove()
+{
+	string name = enterName();
+	string unit = enterUnit();
+	double availableQuantity = enterAvailableQuantity();
+
+	Product* oldestProductMatchingCriteria = nullptr;
+	int indexOfOldestProduct;
+
+	for (int i = 0; i < products.size(); i++)
+	{
+		if(products[i].getName().compare(name) == 0 && products[i].getUnit().compare(unit) == 0 &&
+			products[i].getAvailableQuantity() == availableQuantity)
+		{
+			if (oldestProductMatchingCriteria == nullptr || 
+				products[i].getExpiryDate() < oldestProductMatchingCriteria->getExpiryDate())
+			{
+				oldestProductMatchingCriteria = &products[i];
+				indexOfOldestProduct = i;
+			}
+		}
+	}
+
+	if (oldestProductMatchingCriteria == nullptr)
+	{
+		cout << "No product matching criteria is found." << endl;
+	}
+
+	else
+	{
+		Product productCopy = *oldestProductMatchingCriteria;
+		removeProductFromSpace(*oldestProductMatchingCriteria);
+		string currentDateString = currentDateTime();
+		ISODate currentDate;
+		currentDate.constructDate(currentDateString);
+		AuditStatement auditStatement = AuditStatement("remove", *oldestProductMatchingCriteria, currentDate);
+		this->auditStatements.push_back(auditStatement);
+		products.erase(products.begin() + indexOfOldestProduct);
+		cout << "The product was removed." << endl;
+		cout << productCopy << endl;
+	}
+}
+
 //Използвано от https://stackoverflow.com/questions/997946/how-to-get-current-time-and-date-in-c
 //Взима текущата дата
 const string Store::currentDateTime() 
@@ -204,15 +247,21 @@ void Store::removeProductFromSpace(Product product)
 
 void Store::enterName(Product &product)
 {
+	string name = enterName();
+	product.setName(name);
+}
+
+string Store::enterName()
+{
 	string name;
 	do
 	{
-		cout << "Enter the name of the product: " ;
+		cout << "Enter the name of the product: ";
 		getline(cin, name);
-	} 
+	}
 
 	while (name.empty() || name.size() > MAX_NAME_LENGTH);
-	product.setName(name.c_str());
+	return name;
 }
 
 void Store::enterExpiryDate(Product &product)
@@ -259,38 +308,54 @@ void Store::enterNameOfManufacturer(Product &product)
 	}
 
 	while (nameOfManufacturer.empty() || nameOfManufacturer.size() > MAX_NAME_LENGTH );
-	product.setNameOfManufacturer(nameOfManufacturer.c_str());
+	product.setNameOfManufacturer(nameOfManufacturer);
 }
 
-void Store::enterUnit(Product &product)
+void Store::enterUnit(Product& product)
+{
+	string unit = enterUnit();
+	product.setUnit(unit);
+}
+
+string Store::enterUnit()
 {
 	string unit;
 	do
 	{
 		cout << "Enter the unit of the product (kg for kilograms and l for liter): ";
 		getline(cin, unit);
-	} 
+	}
+	
 	while (unit.empty() || unit.size() > MAX_UNIT_LENGTH || strcmp(unit.c_str(), "kg") != 0 && strcmp(unit.c_str(), "l") != 0);
-	product.setUnit(unit.c_str());
+	return unit;
 }
 
 void Store::enterAvailableQuantity(Product& product)
 {
+	double availableQuantity = enterAvailableQuantity();
+	product.setAvailableQuantity(availableQuantity);
+}
+
+double Store::enterAvailableQuantity()
+{
 	double availableQuantity;
+	string availableQuantityString;
 	do
 	{
-		cout << "Enter the quantity of the product: " ;
-		cin >> availableQuantity;
-	} 
-	
+		cout << "Enter the quantity of the product: ";	
+		getline(cin, availableQuantityString);
+		availableQuantity = stod(availableQuantityString);
+	}
+
 	while (availableQuantity <= 0);
-	product.setAvailableQuantity(availableQuantity);
+
+	return availableQuantity;
 }
 
 void Store::enterComment(Product& product)
 {
 	string comment;
-	cin.ignore(INT_MAX, '\n');
+	//cin.ignore(INT_MAX, '\n');
 	do
 	{
 		cout << "Enter a comment: ";
@@ -298,7 +363,7 @@ void Store::enterComment(Product& product)
 	} 
 	
 	while (comment.empty() || comment.size() > MAX_COMMENT_LENGTH);
-	product.setComment(comment.c_str());
+	product.setComment(comment);
 }
 
 ostream& operator<<(ostream& output, const Store& store)

@@ -16,3 +16,6 @@ void saveProductInfoInFile(string outputFilePath, Product product);
 void saveAsProductToFile(string filePath, Product* products, int numberOfProducts);
 void testAuditStatement();
 void testPrint();
+void openFile(string filePath);
+void printSuccessMessage(string filePath);
+void printErrorMessage(string filePath);

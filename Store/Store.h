@@ -21,6 +21,10 @@ public:
 	void add();
 	void logFromTo(ISODate fromDate, ISODate toDate, Store& store);
 	void clean();
+	void remove();
+	string enterName();
+	double enterAvailableQuantity();
+	string enterUnit();
 	const string currentDateTime();
 	bool addLocation(Product& product);
 	Space findSpaceByLocation(Location location);
