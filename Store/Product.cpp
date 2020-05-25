@@ -49,14 +49,12 @@ Product::Product(string name, ISODate expiryDate, ISODate dateOfReceipt,
 Product::Product(const Product& other)
 {
 	this->copy(other);
-	//this->availableQuantity = other.availableQuantity;
 }
 
 Product& Product::operator=(const Product& other)
 {
 	if (this != &other)
 	{
-		//this->erase();
 		this->copy(other);
 	}
 

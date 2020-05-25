@@ -129,15 +129,21 @@ bool ISODate::checkIfDateIsInISOFormat(string date)
 
 	for (int i = 0; i < date.size(); i++) 
     {
+        //Проверяваме дали символ на място номер 4 и на място номер 7 са тирета.
+        //2000-01-01 - примерна дата в ISO формат
 		if (i == 4 || i == 7) 
         {
+            //Използваме символа за тире от ASCII таблицата - 45. 
 			bool isDash = date[i] == 45;
+            //Ако на място номер 4 или на място номер 7 не стоят тирета, то връщаме грешка.
 			if (!isDash) 
             {
 				return false;
 			}
 		}
 
+        //Ако на място номер 4 и на място номер 7 стоят тирета, то проверяваме дали останлите символи са цифри и проверяваме дали това е валидна дата.
+        //За проверката на символите дали са цифри използваме символите от 48 до 57 от ASCII таблицата.
 		else 
         {
 			bool isNumber = date[i] >= 48 && date[i] <= 57;
@@ -150,55 +156,52 @@ bool ISODate::checkIfDateIsInISOFormat(string date)
 	return true;
 }
 
-    //Проверяваме дали годината е високосна
+//Проверяваме дали годината е високосна
+// Връща true ако годината се дели на 4 и не се дели на 100 или се дели на 400.
+
 bool ISODate::isLeap(int year)
 {
-    // Връща true ако годината се дели на 4 и не се дели на 100 
-    // или се дели на 400.
-    return (((year % 4 == 0) &&
-        (year % 100 != 0)) ||
-        (year % 400 == 0));
-}
+    return (((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0));
+}   
 
-    //Проверяваме дали датата е валидна
-bool ISODate::isValidDate(int d, int m, int y)
+//Проверяваме дали датата е валидна
+bool ISODate::isValidDate(int day, int month, int year)
 {
-    if (y > MAX_VALID_YEAR || y < MIN_VALID_YEAR)
+    if (year > MAX_VALID_YEAR || year < MIN_VALID_YEAR)
     {
         return false;
     }
 
-    if (m < 1 || m > 12)
+    if (month < 1 || month > 12)
     {
         return false;
     }
 
-    if (d < 1 || d > 31)
+    if (day < 1 || day > 31)
     {
         return false;
     }
 
-    //Проверяваме за месец февруари 
-    //Ако годината е високосна то максималните дни са 29
-    //Ако годината не е високосна то максималните дни са 30
-    if (m == 2)
+    //Проверяваме за месец февруари.
+    //Ако годината е високосна то максималните дни са 29.
+    //Ако годината не е високосна то максималните дни са 28.
+    if (month == 2)
     {
-        if (isLeap(y))
+        if (isLeap(year))
         {
-            return (d <= 29);
+            return (day <= 29);
         }
 
         else
         {
-            return (d <= 28);
+            return (day <= 28);
         }
     }
 
     //Месеците април, юни, септември и ноември трябва да имат максимум 30 дни.
-    if (m == 4 || m == 6 ||
-        m == 9 || m == 11)
+    if (month == 4 || month == 6 || month == 9 || month == 11)
     {
-        return (d <= 30);
+        return (day <= 30);
     }
 
     return true;

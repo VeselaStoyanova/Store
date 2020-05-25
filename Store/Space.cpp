@@ -55,6 +55,7 @@ bool Space:: operator==(const Space& other)
 		this->availableQuantity == other.availableQuantity;
 }
 
+//Setters
 void Space::setLocation(Location* location)
 {
 	delete[] this->location;
@@ -71,6 +72,7 @@ void Space::setAvailableQuantity(const int availableQuantity)
 	this->availableQuantity = availableQuantity;
 }
 
+//Getters
 Location* Space::getLocation() const
 {
 	return this->location;

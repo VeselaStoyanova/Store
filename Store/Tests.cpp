@@ -1,7 +1,7 @@
 ﻿#include <iostream>
 #include "Tests.h"
 #include <fstream>
-#include "ComandsExecutor.h"
+#include "CommandsExecutor.h"
 
 using namespace std;
 
@@ -133,6 +133,7 @@ void saveProductInfoInFile(string outputFilePath, Product product)
 		outputFileStream.close();
 		printSuccessMessage(outputFilePath);
 	}
+
 	else
 	{
 		printErrorMessage(outputFilePath);
@@ -153,9 +154,11 @@ void saveAsProductToFile(string filePath, Product* products, int numberOfProduct
 				<< products[i].getNameOfManufacturer() << " " << products[i].getUnit()
 				<< products[i].getAvailableQuantity() << " " << products[i].getComment() << endl;
 		}
+
 		printSuccessMessage(filePath);
 		outputFileStream.close();
 	}
+
 	else
 	{
 		printErrorMessage(filePath);

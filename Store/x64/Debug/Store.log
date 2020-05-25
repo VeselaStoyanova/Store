@@ -1,6 +1,24 @@
-﻿  Store.cpp
-D:\FMI\Github\Store\Store\Store.cpp(50,30): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-D:\FMI\Github\Store\Store\Store.cpp(68,28): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-D:\FMI\Github\Store\Store\Store.cpp(242,29): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-D:\FMI\Github\Store\Store\Store.cpp(83): warning C4715: 'Store::findSpaceByLocation': not all control paths return a value
+﻿  AuditStatement.cpp
+D:\FMI\Github\Store\Store\AuditStatement.cpp(20,28): warning C4305: 'argument': truncation from 'int' to 'const _Elem'
+          with
+          [
+              _Elem=char
+          ]
+D:\FMI\Github\Store\Store\AuditStatement.cpp(20,24): warning C4309: 'argument': truncation of constant value
+  CommandsExecutor.cpp
+D:\FMI\Github\Store\Store\CommandsExecutor.cpp(76,32): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+D:\FMI\Github\Store\Store\CommandsExecutor.cpp(139,22): warning C4244: 'initializing': conversion from 'unsigned __int64' to 'float', possible loss of data
+  ISODate.cpp
+  Location.cpp
+  Main.cpp
+  Product.cpp
+  Space.cpp
+D:\FMI\Github\Store\Store\Space.cpp(107,33): warning C4244: 'argument': conversion from 'double' to 'const int', possible loss of data
+  Store.cpp
+D:\FMI\Github\Store\Store\Store.cpp(52,30): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+D:\FMI\Github\Store\Store\Store.cpp(70,28): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+D:\FMI\Github\Store\Store\Store.cpp(268,29): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+  Tests.cpp
+  Generating Code...
+D:\FMI\Github\Store\Store\Store.cpp(85): warning C4715: 'Store::findSpaceByLocation': not all control paths return a value
   Store.vcxproj -> D:\FMI\Github\Store\x64\Debug\Store.exe

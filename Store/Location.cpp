@@ -90,6 +90,7 @@ ostream& operator<<(ostream& output, const Location& location)
 
 istream& operator>>(istream& input, Location& location)
 {
+	//Чрез функцията stoi пръвръщаме string в int.
 	string section;
 	getline(input, section);
 	location.setSection(stoi(section));
@@ -105,7 +106,7 @@ istream& operator>>(istream& input, Location& location)
 	return input;
 }
 
-//Принтираме мястото на продукта
+//Принтираме мястото на продукта.
 void Location::printLocation() const
 {
 	cout << "Section: " << getSection() << endl;

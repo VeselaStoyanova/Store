@@ -26,8 +26,10 @@ Store::Store(vector<AuditStatement> auditStatement)
 	this->auditStatements = auditStatement;
 }
 
+//Добавяме място на продукта.
 bool Store::addLocation(Product& product)
 {
+	//Обхождаме векторът от продукти.
 	for (int i = 0; i < products.size(); i++)
 	{
 		bool areNamesEqual = products[i].getName().compare(product.getName()) == 0;
@@ -82,6 +84,7 @@ Space Store::findSpaceByLocation(Location location)
 	}
 }
 
+//Намираме първото свободно място.
 Space* Store::findFirstAvailableSpace(Product product)
 {
 	for (int i = 0; i < spaces.size(); i++)
@@ -99,6 +102,7 @@ Space* Store::findFirstAvailableSpace(Product product)
 	return nullptr;
 }
 
+//Функция add, която добавя нов продукт в склада.
 void Store::add()
 {
 	Product product;
@@ -111,6 +115,10 @@ void Store::add()
 	enterComment(product);
 	bool isSuitableLocationFound = addLocation(product);
 
+	//Ако е намерено място за продукта, то го добавяме във вектора от продукти.
+	//Добавяме му датата, на която е извършена операцията.
+	//За дата на извършване на операцията приемаме датата, на която сме добавили продукта в склада.
+	//Датата на извършване на операцията използваме във функцията log<from><to>.
 	if (isSuitableLocationFound) 
 	{
 		this->products.push_back(product);
@@ -121,19 +129,26 @@ void Store::add()
 		this->auditStatements.push_back(auditStatement);
 	}
 
+	//Ако не е намерено място за продукта в склада, то извеждаме съобщение за грешка.
 	else 
 	{
 		cout << "No suitable location was found for the product: " << endl << product << endl;
 	}
 }
 
+//Функция log <from><to>, която извежда справка за всички промени в наличността в даден период.
 void Store::logFromTo(ISODate fromDate, ISODate toDate, Store& store)
 {
 	int counter = 0;
+	//Проверяваме за коректност на въведените дати.
 	if (fromDate <= toDate)
 	{
+		//Обхождаме векторът от auditStatement-и.
 		for (int i = 0; i < auditStatements.size(); i++)
 		{
+			//Проверяваме дали датата на извършване на операцията е в интервала между началната дата и крайната дата.
+			//Ако е в този интервал, то принтираме всички добавяния и премахвания на продукти.
+			//Чрез counter броим колко добавяния и премахвания на продукти има.
 			if (auditStatements[i].getOperationDate() >= fromDate && auditStatements[i].getOperationDate() <= toDate)
 			{
 				store.auditStatements[i].printAuditStatement();
@@ -141,18 +156,22 @@ void Store::logFromTo(ISODate fromDate, ISODate toDate, Store& store)
 			}
 		}
 
+		//Ако нямаме нито едно добавяне или премахване на продукт, то извеждаме съобщение за грешка.
 		if (counter == 0)
 		{
 			cout << "There is no operation." << endl;
 		}
 	}
 
+	//Ако <from> е по-голям от <to>, то въведените дати са некоректни и извеждаме съобщение за грешка.
 	else if(fromDate > toDate)
 	{
 		cout << "Error, bad input!" << endl;
 	}
 }
 
+//Функция clean, която разчиства склада от всички стоки, на които е изтекъл срокът на годност или от тези, на които им предстои скоро да им изтече.
+//Приемаме, че скоро е днес.
 void Store::clean()
 {
 	//конструираме string от днешната дата
@@ -160,6 +179,8 @@ void Store::clean()
 	ISODate currentDate;
 	currentDate.constructDate(currentDateString);
 	
+	//Обхождаме векторът от продукти.
+	//Ако намерим продукт, чийто срок на годност е изтекъл или е до днес, то го премахваме и извеждаме кои продукти са били премахнати.
 	for (auto it = products.begin(); it != products.end();)
 	{
 		ISODate date = it->getExpiryDate();
@@ -177,6 +198,7 @@ void Store::clean()
 	}
 }
 
+//Функция remove, която изважда продукт от склада.
 void Store::remove()
 {
 	string name = enterName();
@@ -186,13 +208,14 @@ void Store::remove()
 	Product* oldestProductMatchingCriteria = nullptr;
 	int indexOfOldestProduct;
 
+	//Обхождаме вектора от продукти.
 	for (int i = 0; i < products.size(); i++)
 	{
+		//Ако името на продукта, мерната единица и количеството съвпадат с въведените от потребителя, то премахваме този продукт.
 		if(products[i].getName().compare(name) == 0 && products[i].getUnit().compare(unit) == 0 &&
 			products[i].getAvailableQuantity() == availableQuantity)
 		{
-			if (oldestProductMatchingCriteria == nullptr || 
-				products[i].getExpiryDate() < oldestProductMatchingCriteria->getExpiryDate())
+			if (oldestProductMatchingCriteria == nullptr || products[i].getExpiryDate() < oldestProductMatchingCriteria->getExpiryDate())
 			{
 				oldestProductMatchingCriteria = &products[i];
 				indexOfOldestProduct = i;
@@ -200,15 +223,18 @@ void Store::remove()
 		}
 	}
 
+	//Ако не е намерен такъв продукт, то извеждаме съобщение за грешка.
 	if (oldestProductMatchingCriteria == nullptr)
 	{
 		cout << "No product matching criteria is found." << endl;
 	}
 
+	//Ако открием такъв продукт, то го добавяме и във вектора от auditStatement-и.
 	else
 	{
 		Product productCopy = *oldestProductMatchingCriteria;
 		removeProductFromSpace(*oldestProductMatchingCriteria);
+
 		string currentDateString = currentDateTime();
 		ISODate currentDate;
 		currentDate.constructDate(currentDateString);
@@ -221,7 +247,7 @@ void Store::remove()
 }
 
 //Използвано от https://stackoverflow.com/questions/997946/how-to-get-current-time-and-date-in-c
-//Взима текущата дата
+//Взимаme текущата дата.
 const string Store::currentDateTime() 
 {
 	time_t     now = time(0);
@@ -251,6 +277,7 @@ void Store::enterName(Product &product)
 	product.setName(name);
 }
 
+//Функция, чрез която въвеждаме име на продукта.
 string Store::enterName()
 {
 	string name;
@@ -264,6 +291,7 @@ string Store::enterName()
 	return name;
 }
 
+//Функция, чрез която въвеждаме срокът на годност на продукта.
 void Store::enterExpiryDate(Product &product)
 {
 	string expiryDate;
@@ -281,6 +309,7 @@ void Store::enterExpiryDate(Product &product)
 	product.setExpiryDate(isoDate);
 }
 
+//Функция, чрез която въвеждаме датата на постъпване в склада.
 void Store::enterDateOfReceipt(Product& product)
 {
 	string dateOfReceipt;
@@ -298,6 +327,7 @@ void Store::enterDateOfReceipt(Product& product)
 	product.setDateOfReceipt(isoDate);
 }
 
+//Функция, чрез която въвеждаме името на доставчика на продукта.
 void Store::enterNameOfManufacturer(Product &product)
 {
 	string nameOfManufacturer;
@@ -317,6 +347,7 @@ void Store::enterUnit(Product& product)
 	product.setUnit(unit);
 }
 
+//Функция, чрез която въвеждаме мерната единица на продукта.
 string Store::enterUnit()
 {
 	string unit;
@@ -336,6 +367,7 @@ void Store::enterAvailableQuantity(Product& product)
 	product.setAvailableQuantity(availableQuantity);
 }
 
+//Функция, чрез която въвеждаме количеството на продукта.
 double Store::enterAvailableQuantity()
 {
 	double availableQuantity;
@@ -352,10 +384,10 @@ double Store::enterAvailableQuantity()
 	return availableQuantity;
 }
 
+//Функция, чрез която въвеждаме коментар за продукта.
 void Store::enterComment(Product& product)
 {
 	string comment;
-	//cin.ignore(INT_MAX, '\n');
 	do
 	{
 		cout << "Enter a comment: ";
@@ -398,10 +430,12 @@ istream& operator>>(istream& input, Store& store)
 	{
 		store.products.clear();
 	}
+
 	if (store.spaces.size() > 0) 
 	{
 		store.spaces.clear();
 	}
+
 	if (store.auditStatements.size() > 0)
 	{
 		store.auditStatements.clear();

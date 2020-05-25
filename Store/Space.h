@@ -10,7 +10,6 @@ private:
 	Location* location;
 	string unit;
 	int availableQuantity;
-	void copy(const Space& other);
 	
 public:
 	Space();
@@ -32,4 +31,7 @@ public:
 
 	friend ostream& operator<<(ostream& os, const Space& space);
 	friend istream& operator>>(istream& input, Space& space);
+
+private:
+	void copy(const Space& other);
 };

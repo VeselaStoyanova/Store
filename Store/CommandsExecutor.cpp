@@ -6,6 +6,8 @@
 
 using namespace std;
 
+//Искаме функциите open, help и exit да са единствените възможности при стартиране на програмата.
+//В началото, ако изберем функцията help, искаме да ни излезне информация само за тези функции.
 void showHelp() 
 {
 	cout << endl;
@@ -16,6 +18,8 @@ void showHelp()
 	cout << endl;
 }
 
+//След като сме избрали файл, то вече имаме следните възможности : close, save, save as, help, exit, print, add, remove, log <from> <to>, clean.
+//Ако изберем функцията help, то искаме да ни излиза информация за тези функции.
 void showAdvancedHelp()
 {
 	cout << endl;
@@ -33,21 +37,22 @@ void showAdvancedHelp()
 	cout << endl;
 }
 
-//Функция, чрез която задаваме колко място има в склада
+//Функция, чрез която задаваме колко място има в склада.
+//Използваме константи за задаването на броя на секциите, рафтовете на секция, номерата на рафт и броя на продуктите, които стоят на един номер на рафт.
 vector<Space> createSpaces()
 {
 	vector<Space> spaces;
 
-	//Задаваме колко секции има в склада
+	//Задаваме колко секции има в склада.
 	int sectionsCount = SECTIONS_COUNT;
 
-	//Задаваме колко рафта има в секция
+	//Задаваме колко рафта има в секция.
 	int shelvesCountPerSection = SHELVES_COUNT;
 
-	//Задаваме колко номера има на рафт
+	//Задаваме колко номера има на рафт.
 	int numbersCountPerShelf = NUMBERS_COUNT;
 
-	//Обхождаме мястото в склада по секции, рафтове и номера
+	//Обхождаме мястото в склада по секции, рафтове и номера.
 	for (int i = 1; i < SECTIONS_COUNT; i++)
 	{
 		for (int j = 1; j < SHELVES_COUNT; j++)
@@ -60,29 +65,30 @@ vector<Space> createSpaces()
 		}
 	}
 
-	//Задаваме мерна единица
-	//За половината склад задаваме като мерна единица литри
+	//Задаваме мерна единица.
+	//За половината склад задаваме като мерна единица литри.
 	for (int i = 0; i < spaces.size() / 2; i++)
 	{
 		spaces[i].setUnit("l");
 	}
 
-	//За другата половина от склада задаваме като мерна единица килограми
+	//За другата половина от склада задаваме като мерна единица килограми.
 	for (int i = spaces.size() / 2; i < spaces.size(); i++)
 	{
 		spaces[i].setUnit("kg");
 	}
+
 	return spaces;
 }
 
-//Функция print
-//Извежда информация за наличните продукти в склада.
+//Функция print.
+//Извежда информация за наличните продукти в склада..
 void print(Store& store)
 {
 	store.print();
 }
 
-//Отваряне на файл
+//Отваряне на файл.
 void openFileWithStore(string filePath, Store& storeToFill)
 {
 	ifstream inputFileStream;
@@ -112,24 +118,29 @@ void saveStoreInFile(Store& store, string filePath)
 	}
 }
 
+//Чрез тази функция проверяваме дали въведената команда е open <path>.
 bool isCommandOpen(string choice)
 {
 	return choice.size() > 5 && choice.substr(0, 5).compare("open ") == 0;
 }
 
+//Чрез тази функция проверяваме дали въведената команда е save as <path>.
 bool isFileSavedAs(string choice)
 {
 	return choice.size() > 8 && choice.substr(0, 8).compare("save as ") == 0;
 }
 
+//Чрез тази функция проверяваме дали въведената команда е log <from> <to>.
 bool isCommandLogFromTo(string choice)
 {
+	//Задаваме дължината на log <from> <to>
 	string sampleDates = "log 0000-00-00 0000-00-00";
+	//Взимаме дължината на sampleDate и го сравняваме с въведената от потребителя.
 	float commandLength = sampleDates.size();
 	return choice.size() == commandLength && choice.substr(0, 4).compare("log ") == 0;
 }
 
-//Когато започваме ще можем да отворим файл, да видим какви команди поддържа програмата и да излезнем от програмата.
+//При стартиране на програмата имаме следните възможни функции: open, help и exit.
 string showStartMenu()
 {
 	cout << "Enter one of the following options:" ;
@@ -149,8 +160,7 @@ string showStartMenu()
 	return choice;
 }
 
-//Когато сме в даден файл ще можем да го затворим, да запишем промените във файла в същия файл,
-//да запишем промените в друг файл, да видим какви команди поддържа програмата и да излезнем от програмата.
+//След като сме отворили файл имаме следните възможности: close, save, save as, help, exit, print, add, remove, log <from><to>, clean.
 string showAdvancedMenu()
 {
 	cout << endl;
@@ -187,7 +197,6 @@ string showAdvancedMenu()
 void logFromTo(string choice, Store& store)
 {
 	// Примерен потребителски вход - log 2020-02-02 2021-05-05
-
 	//Конструираме fromDate от стринг
 	string fromDateString = choice.substr(4, 10);
 	ISODate fromDate;
@@ -239,6 +248,7 @@ void showMenu()
 			if (isFileNameNotOnlyIntervals)
 			{
 				cout << "Open file." << endl;
+				//Взимаме името на файла, който искаме да отворим.
 				openFileWithStore(filePath, store);
 				isFileOpen = true;
 			}
@@ -280,6 +290,7 @@ void showMenu()
 
 		else if (isFileSavedAs(choice))
 		{
+			//Взимаме името на новия файл.
 			filePath = choice.substr(8, choice.size() - 8);
 			saveStoreInFile(store, filePath);
 			cout << "Successfully saved another file." << endl;

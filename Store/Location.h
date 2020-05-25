@@ -10,8 +10,7 @@ private:
 	int section;
 	int shelf;
 	int number;
-	void copy(const Location& other);
-
+	
 public:
 	Location();
 	Location(int section, int shelf, int number);
@@ -32,5 +31,8 @@ public:
 	friend ostream& operator<<(ostream& output, const Location& location);
 	friend istream& operator>>(istream& input, Location& location);
 	void printLocation()const;
+
+private:
+	void copy(const Location& other);
 };
 

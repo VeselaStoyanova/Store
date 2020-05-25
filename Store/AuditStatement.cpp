@@ -56,6 +56,7 @@ AuditStatement::~AuditStatement()
 	this->erase();
 }
 
+//Setters
 void AuditStatement::setOperationType(string operationType)
 {
 	this->operationType = operationType;
@@ -71,6 +72,7 @@ void AuditStatement::setOperationDate(ISODate operationDate)
 	this->product = product;
 }
 
+//Getters
 string AuditStatement::getOperationType() const
 {
 	return this->operationType;

@@ -7,7 +7,7 @@
 #include "Common.h"
 #include "ISODate.h"
 #include "Tests.h"
-#include "ComandsExecutor.h"
+#include "CommandsExecutor.h"
 using namespace std;
 
 void tests()
@@ -22,11 +22,6 @@ void tests()
 
 int main()
 {
-
-	/*const char* outputFilePath = "myFile.txt";
-	Product product;
-	vector<Space>spaces = createSpaces();
-	Store store = Store(spaces);*/
     showMenu();
 	return 0;
 }

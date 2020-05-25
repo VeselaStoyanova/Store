@@ -11,8 +11,6 @@ private:
 	string operationType;
 	Product product;
 	ISODate operationDate;
-	void copy(const AuditStatement& other);
-	void erase();
 
 public:
 	AuditStatement();
@@ -35,4 +33,8 @@ public:
 	friend ostream& operator<<(ostream& output, const AuditStatement& auditStatement);
 	friend istream& operator>>(istream& input, AuditStatement& auditStatement);
 	void printAuditStatement();
+
+private:
+	void copy(const AuditStatement& other);
+	void erase();
 };
