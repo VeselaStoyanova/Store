@@ -139,7 +139,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AuditStatement.cpp" />
-    <ClCompile Include="ComandsExecutor.cpp" />
+    <ClCompile Include="CommandsExecutor.cpp" />
     <ClCompile Include="ISODate.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Product.cpp" />
@@ -150,7 +150,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AuditStatement.h" />
-    <ClInclude Include="ComandsExecutor.h" />
+    <ClInclude Include="CommandsExecutor.h" />
     <ClInclude Include="Common.h" />
     <ClInclude Include="ISODate.h" />
     <ClInclude Include="Location.h" />

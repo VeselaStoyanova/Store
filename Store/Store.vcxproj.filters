@@ -36,10 +36,10 @@
     <ClCompile Include="Tests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ComandsExecutor.cpp">
+    <ClCompile Include="AuditStatement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AuditStatement.cpp">
+    <ClCompile Include="CommandsExecutor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -65,10 +65,10 @@
     <ClInclude Include="Tests.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ComandsExecutor.h">
+    <ClInclude Include="AuditStatement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AuditStatement.h">
+    <ClInclude Include="CommandsExecutor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
