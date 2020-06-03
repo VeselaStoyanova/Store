@@ -107,7 +107,7 @@ void openFileWithStore(string filePath, Store& storeToFill)
 }
 
 //Запазване във файл.
-void saveStoreInFile(Store& store, string filePath) 
+void saveStoreInFile(Store& store, string filePath)
 {
 	ofstream outputFileStream;
 	outputFileStream.open(filePath, ios::out);
@@ -213,7 +213,7 @@ void logFromTo(string choice, Store& store)
 //Проверяваме дали имаме отворен файл.
 //Ако нямаме, показваме showStartMenu.
 //Ако имаме, показваме showAdvancedMenu.
-string showParticularMenu(bool isFileOpen) 
+string showParticularMenu(bool isFileOpen)
 {
 	if (!isFileOpen) 
 	{

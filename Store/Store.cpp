@@ -102,6 +102,15 @@ Space* Store::findFirstAvailableSpace(Product product)
 	return nullptr;
 }
 
+void Store::print()
+{
+	cout << "The products in the store are: " << endl;
+	for (int i = 0; i < this->products.size(); i++)
+	{
+		products[i].productPrint();
+	}
+}
+
 //Функция add, която добавя нов продукт в склада.
 void Store::add()
 {
@@ -133,6 +142,54 @@ void Store::add()
 	else 
 	{
 		cout << "No suitable location was found for the product: " << endl << product << endl;
+	}
+}
+
+//Функция remove, която изважда продукт от склада.
+void Store::remove()
+{
+	string name = enterName();
+	string unit = enterUnit();
+	double availableQuantity = enterAvailableQuantity();
+
+	Product* oldestProductMatchingCriteria = nullptr;
+	int indexOfOldestProduct;
+
+	//Обхождаме вектора от продукти.
+	for (int i = 0; i < products.size(); i++)
+	{
+		//Ако името на продукта, мерната единица и количеството съвпадат с въведените от потребителя, то премахваме този продукт.
+		if (products[i].getName().compare(name) == 0 && products[i].getUnit().compare(unit) == 0 &&
+			products[i].getAvailableQuantity() == availableQuantity)
+		{
+			if (oldestProductMatchingCriteria == nullptr || products[i].getExpiryDate() < oldestProductMatchingCriteria->getExpiryDate())
+			{
+				oldestProductMatchingCriteria = &products[i];
+				indexOfOldestProduct = i;
+			}
+		}
+	}
+
+	//Ако не е намерен такъв продукт, то извеждаме съобщение за грешка.
+	if (oldestProductMatchingCriteria == nullptr)
+	{
+		cout << "No product matching criteria is found." << endl;
+	}
+
+	//Ако открием такъв продукт, то го добавяме и във вектора от auditStatement-и.
+	else
+	{
+		Product productCopy = *oldestProductMatchingCriteria;
+		removeProductFromSpace(*oldestProductMatchingCriteria);
+
+		string currentDateString = currentDateTime();
+		ISODate currentDate;
+		currentDate.constructDate(currentDateString);
+		AuditStatement auditStatement = AuditStatement("remove", *oldestProductMatchingCriteria, currentDate);
+		this->auditStatements.push_back(auditStatement);
+		products.erase(products.begin() + indexOfOldestProduct);
+		cout << "The product was removed." << endl;
+		cout << productCopy << endl;
 	}
 }
 
@@ -195,54 +252,6 @@ void Store::clean()
 		{
 			it++;
 		}
-	}
-}
-
-//Функция remove, която изважда продукт от склада.
-void Store::remove()
-{
-	string name = enterName();
-	string unit = enterUnit();
-	double availableQuantity = enterAvailableQuantity();
-
-	Product* oldestProductMatchingCriteria = nullptr;
-	int indexOfOldestProduct;
-
-	//Обхождаме вектора от продукти.
-	for (int i = 0; i < products.size(); i++)
-	{
-		//Ако името на продукта, мерната единица и количеството съвпадат с въведените от потребителя, то премахваме този продукт.
-		if(products[i].getName().compare(name) == 0 && products[i].getUnit().compare(unit) == 0 &&
-			products[i].getAvailableQuantity() == availableQuantity)
-		{
-			if (oldestProductMatchingCriteria == nullptr || products[i].getExpiryDate() < oldestProductMatchingCriteria->getExpiryDate())
-			{
-				oldestProductMatchingCriteria = &products[i];
-				indexOfOldestProduct = i;
-			}
-		}
-	}
-
-	//Ако не е намерен такъв продукт, то извеждаме съобщение за грешка.
-	if (oldestProductMatchingCriteria == nullptr)
-	{
-		cout << "No product matching criteria is found." << endl;
-	}
-
-	//Ако открием такъв продукт, то го добавяме и във вектора от auditStatement-и.
-	else
-	{
-		Product productCopy = *oldestProductMatchingCriteria;
-		removeProductFromSpace(*oldestProductMatchingCriteria);
-
-		string currentDateString = currentDateTime();
-		ISODate currentDate;
-		currentDate.constructDate(currentDateString);
-		AuditStatement auditStatement = AuditStatement("remove", *oldestProductMatchingCriteria, currentDate);
-		this->auditStatements.push_back(auditStatement);
-		products.erase(products.begin() + indexOfOldestProduct);
-		cout << "The product was removed." << endl;
-		cout << productCopy << endl;
 	}
 }
 
@@ -477,11 +486,4 @@ istream& operator>>(istream& input, Store& store)
 	return input;
 }
 
-void Store::print()
-{
-	cout << "The products in the store are: " << endl;
-	for (int i = 0; i < this->products.size(); i++)
-	{
-		products[i].productPrint();
-	}
-}
+
