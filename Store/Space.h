@@ -29,7 +29,7 @@ public:
 	string getUnit() const;
 	int getAvailableQuantity() const;
 
-	friend ostream& operator<<(ostream& os, const Space& space);
+	friend ostream& operator<<(ostream& output, const Space& space);
 	friend istream& operator>>(istream& input, Space& space);
 
 private:

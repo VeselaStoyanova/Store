@@ -57,7 +57,7 @@ void testSpace()
 	Space fourthSpace = Space(secondSpace);
 	cout << fourthSpace << endl;
 
-	//Тестване на оператор >>
+	//Тестване на оператор >> и оператор <<
 	Space inputSpace;
 	cin >> inputSpace;
 	cout << inputSpace;
