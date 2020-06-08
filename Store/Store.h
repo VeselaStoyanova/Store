@@ -7,6 +7,7 @@
 #include "AuditStatement.h"
 
 using namespace std;
+
 class Store
 {
 private:

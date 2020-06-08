@@ -25,7 +25,6 @@ public:
 	Product(const Product& other);
 	Product& operator=(const Product& other);
 	bool operator==(const Product& other);
-	~Product();
 
 	//Setters
 	void setName(string name);
@@ -49,9 +48,9 @@ public:
 
 	friend ostream& operator<<(ostream& output, const Product& product);
 	friend istream& operator>>(istream& input, Product& product);
+
 	void productPrint()const;
 
 private:
 	void copy(const Product& other);
-	void erase();
 };

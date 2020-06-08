@@ -5,6 +5,7 @@
 #include "ISODate.h"
 #include "Space.h"
 #include "Store.h"
+
 using namespace std;
 
 void testProduct();

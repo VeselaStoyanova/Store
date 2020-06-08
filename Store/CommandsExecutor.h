@@ -2,6 +2,7 @@
 #include <iostream>
 #include "Store.h"
 #include "Space.h"
+
 using namespace std;
 
 void showHelp();

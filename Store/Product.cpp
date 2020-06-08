@@ -17,10 +17,6 @@ void Product::copy(const Product& other)
 	this->comment = other.comment;
 }
 
-void Product::erase()
-{
-}
-
 Product::Product()
 {
 	this->name = '\0';
@@ -71,11 +67,6 @@ bool Product::operator==(const Product& other)
 		this->availableQuantity == other.availableQuantity &&
 		this->location == other.location &&
 		this->comment == other.comment;
-}
-
-Product::~Product()
-{
-	this->erase();
 }
 
 //Setters

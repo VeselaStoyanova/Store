@@ -1,4 +1,4 @@
-14
+16
 Milk
 2018-03-01
 2018-02-17
@@ -138,13 +138,33 @@ kg
 2
 3
 10
-Bananas are frsh.
+Bananas are fresh.
+milk
+2020-12-12
+2020-12-21
+Ivan Petrov
+l
+3
+1
+1
+1
+Vereq
+eggs
+2020-02-02
+2020-01-01
+Ivan Petrov
+kg
+3
+2
+3
+10
+Eggs are fresh.
 210
 1
 1
 1
 l
-20
+17
 1
 1
 2
@@ -679,7 +699,7 @@ kg
 3
 10
 kg
-6
+3
 2
 3
 11
@@ -1190,7 +1210,7 @@ kg
 14
 kg
 30
-14
+16
 add
 Milk
 2018-03-01
@@ -1357,5 +1377,29 @@ kg
 2
 3
 10
-Bananas are frsh.
+Bananas are fresh.
 2020-05-20
+add
+milk
+2020-12-12
+2020-12-21
+Ivan Petrov
+l
+3
+1
+1
+1
+Vereq
+2020-06-08
+add
+eggs
+2020-02-02
+2020-01-01
+Ivan Petrov
+kg
+3
+2
+3
+10
+Eggs are fresh.
+2020-06-08

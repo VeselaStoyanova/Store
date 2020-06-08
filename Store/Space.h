@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include "Location.h"
+
 using namespace std;
 
 class Space

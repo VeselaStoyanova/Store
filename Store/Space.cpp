@@ -101,7 +101,9 @@ istream& operator>>(istream& input, Space& space)
 {
 	space.location = new Location();
 	input >> *space.location;
+
 	getline(input, space.unit);
+
 	string availableQuantity;
 	getline(input, availableQuantity);
 	space.setAvailableQuantity(stod(availableQuantity));

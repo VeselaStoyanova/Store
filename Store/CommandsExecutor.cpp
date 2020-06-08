@@ -18,7 +18,8 @@ void showHelp()
 	cout << endl;
 }
 
-//След като сме избрали файл, то вече имаме следните възможности : close, save, save as, help, exit, print, add, remove, log <from> <to>, clean.
+//След като сме избрали файл, то вече имаме следните възможности : 
+//close, save, save as, help, exit, print, add, remove, log <from> <to>, clean.
 //Ако изберем функцията help, то искаме да ни излиза информация за тези функции.
 void showAdvancedHelp()
 {
@@ -32,7 +33,7 @@ void showAdvancedHelp()
 	cout << "Print			prints information for the current products in the store" << endl;
 	cout << "Add			adds new product in the store" << endl;
 	cout << "Remove			removes a product from the store" << endl;
-	cout << "Log <from> <to>  prints information for the changes in availability" << endl;
+	cout << "Log <from> <to>		prints information for the changes in availability" << endl;
 	cout << "Clean			clears the store of all expired products" << endl;
 	cout << endl;
 }
@@ -82,7 +83,7 @@ vector<Space> createSpaces()
 }
 
 //Функция print.
-//Извежда информация за наличните продукти в склада..
+//Извежда информация за наличните продукти в склада.
 void print(Store& store)
 {
 	store.print();
@@ -135,6 +136,7 @@ bool isCommandLogFromTo(string choice)
 {
 	//Задаваме дължината на log <from> <to>
 	string sampleDates = "log 0000-00-00 0000-00-00";
+
 	//Взимаме дължината на sampleDate и го сравняваме с въведената от потребителя.
 	float commandLength = sampleDates.size();
 	return choice.size() == commandLength && choice.substr(0, 4).compare("log ") == 0;
@@ -160,7 +162,8 @@ string showStartMenu()
 	return choice;
 }
 
-//След като сме отворили файл имаме следните възможности: close, save, save as, help, exit, print, add, remove, log <from><to>, clean.
+//След като сме отворили файл имаме следните възможности:
+//close, save, save as, help, exit, print, add, remove, log <from><to>, clean.
 string showAdvancedMenu()
 {
 	cout << endl;

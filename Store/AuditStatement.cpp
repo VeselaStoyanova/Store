@@ -11,10 +11,6 @@ void AuditStatement:: copy(const AuditStatement& other)
 	this->operationDate = other.operationDate;
 }
 
-void AuditStatement::erase()
-{
-}
-
 AuditStatement::AuditStatement()
 {
 	this->operationType = '/0';
@@ -49,11 +45,6 @@ bool AuditStatement::operator==(const AuditStatement& other)
 	return this->operationType == other.operationType &&
 		this->product == other.product &&
 		this->operationDate == other.operationDate;
-}
-
-AuditStatement::~AuditStatement()
-{
-	this->erase();
 }
 
 //Setters

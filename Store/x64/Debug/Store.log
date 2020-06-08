@@ -1,14 +1,4 @@
 ﻿  CommandsExecutor.cpp
-D:\FMI\Github\Store\Store\CommandsExecutor.cpp(76,32): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-D:\FMI\Github\Store\Store\CommandsExecutor.cpp(139,22): warning C4244: 'initializing': conversion from 'unsigned __int64' to 'float', possible loss of data
-  Main.cpp
-  Space.cpp
-D:\FMI\Github\Store\Store\Space.cpp(107,33): warning C4244: 'argument': conversion from 'double' to 'const int', possible loss of data
-  Store.cpp
-D:\FMI\Github\Store\Store\Store.cpp(52,30): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-D:\FMI\Github\Store\Store\Store.cpp(70,28): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-D:\FMI\Github\Store\Store\Store.cpp(277,29): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-  Tests.cpp
-  Generating Code...
-D:\FMI\Github\Store\Store\Store.cpp(85): warning C4715: 'Store::findSpaceByLocation': not all control paths return a value
+D:\FMI\Github\Store\Store\CommandsExecutor.cpp(77,32): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+D:\FMI\Github\Store\Store\CommandsExecutor.cpp(141,22): warning C4244: 'initializing': conversion from 'unsigned __int64' to 'float', possible loss of data
   Store.vcxproj -> D:\FMI\Github\Store\x64\Debug\Store.exe

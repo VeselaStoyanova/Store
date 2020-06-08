@@ -18,7 +18,6 @@ public:
 	AuditStatement(const AuditStatement& other);
 	AuditStatement& operator=(const AuditStatement& other);
 	bool operator==(const AuditStatement& other);
-	~AuditStatement();
 
 	//Setters
 	void setOperationType(string operationType);
@@ -32,9 +31,9 @@ public:
 
 	friend ostream& operator<<(ostream& output, const AuditStatement& auditStatement);
 	friend istream& operator>>(istream& input, AuditStatement& auditStatement);
+
 	void printAuditStatement();
 
 private:
 	void copy(const AuditStatement& other);
-	void erase();
 };

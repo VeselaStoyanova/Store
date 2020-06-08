@@ -11,7 +11,7 @@ using namespace std;
 
 Store::Store()
 {
-	
+
 }
 
 //Създаваме вектор от space-ове.
@@ -91,7 +91,7 @@ Space* Store::findFirstAvailableSpace(Product product)
 	{
 		bool hasAvailableQuantityInSpace = spaces[i].getAvailableQuantity() >= product.getAvailableQuantity();
 		bool areUnitsTheSame = spaces[i].getUnit() == product.getUnit();
-		
+
 		//Половината склад сме задали да се запълва с продукти в литри, а другата половина - в килограми.
 		//Проверяваме дали имаме достатъчно място и дали мерната единица на продуктите е една и съща.
 		if (hasAvailableQuantityInSpace && areUnitsTheSame)
@@ -115,7 +115,7 @@ void Store::print()
 void Store::add()
 {
 	Product product;
-	enterName(product); 
+	enterName(product);
 	enterExpiryDate(product);
 	enterDateOfReceipt(product);
 	enterNameOfManufacturer(product);
@@ -128,7 +128,7 @@ void Store::add()
 	//Добавяме му датата, на която е извършена операцията.
 	//За дата на извършване на операцията приемаме датата, на която сме добавили продукта в склада.
 	//Датата на извършване на операцията използваме във функцията log<from><to>.
-	if (isSuitableLocationFound) 
+	if (isSuitableLocationFound)
 	{
 		this->products.push_back(product);
 		string currentDateString = currentDateTime();
@@ -139,7 +139,7 @@ void Store::add()
 	}
 
 	//Ако не е намерено място за продукта в склада, то извеждаме съобщение за грешка.
-	else 
+	else
 	{
 		cout << "No suitable location was found for the product: " << endl << product << endl;
 	}
@@ -221,7 +221,7 @@ void Store::logFromTo(ISODate fromDate, ISODate toDate, Store& store)
 	}
 
 	//Ако <from> е по-голям от <to>, то въведените дати са некоректни и извеждаме съобщение за грешка.
-	else if(fromDate > toDate)
+	else if (fromDate > toDate)
 	{
 		cout << "Error, bad input!" << endl;
 	}
@@ -235,7 +235,7 @@ void Store::clean()
 	string currentDateString = currentDateTime();
 	ISODate currentDate;
 	currentDate.constructDate(currentDateString);
-	
+
 	//Обхождаме векторът от продукти.
 	//Ако намерим продукт, чийто срок на годност е изтекъл или е до днес, то го премахваме и извеждаме кои продукти са били премахнати.
 	for (auto it = products.begin(); it != products.end();)
@@ -247,8 +247,8 @@ void Store::clean()
 			cout << "Removed product: " << *it << endl;
 			it = products.erase(it);
 		}
-		
-		else 
+
+		else
 		{
 			it++;
 		}
@@ -257,7 +257,7 @@ void Store::clean()
 
 //Използвано от https://stackoverflow.com/questions/997946/how-to-get-current-time-and-date-in-c
 //Взимаme текущата дата.
-const string Store::currentDateTime() 
+const string Store::currentDateTime()
 {
 	time_t     now = time(0);
 	struct tm  tstruct;
@@ -280,7 +280,7 @@ void Store::removeProductFromSpace(Product product)
 	}
 }
 
-void Store::enterName(Product &product)
+void Store::enterName(Product& product)
 {
 	string name = enterName();
 	product.setName(name);
@@ -301,7 +301,7 @@ string Store::enterName()
 }
 
 //Функция, чрез която въвеждаме срокът на годност на продукта.
-void Store::enterExpiryDate(Product &product)
+void Store::enterExpiryDate(Product& product)
 {
 	string expiryDate;
 	ISODate isoDate;
@@ -312,8 +312,8 @@ void Store::enterExpiryDate(Product &product)
 		cout << "Enter the expiry date of the product: ";
 		getline(cin, expiryDate);
 		isDateValid = isoDate.constructDate(expiryDate);
-	} 
-	
+	}
+
 	while (expiryDate.empty() || expiryDate.size() > MAX_DATE_LENGTH || !isDateValid);
 	product.setExpiryDate(isoDate);
 }
@@ -331,13 +331,13 @@ void Store::enterDateOfReceipt(Product& product)
 		getline(cin, dateOfReceipt);
 		isDateValid = isoDate.constructDate(dateOfReceipt);
 	}
-	
-	while (dateOfReceipt.empty()|| dateOfReceipt.size()> MAX_DATE_LENGTH || !isDateValid);
+
+	while (dateOfReceipt.empty() || dateOfReceipt.size() > MAX_DATE_LENGTH || !isDateValid);
 	product.setDateOfReceipt(isoDate);
 }
 
 //Функция, чрез която въвеждаме името на доставчика на продукта.
-void Store::enterNameOfManufacturer(Product &product)
+void Store::enterNameOfManufacturer(Product& product)
 {
 	string nameOfManufacturer;
 	do
@@ -346,7 +346,7 @@ void Store::enterNameOfManufacturer(Product &product)
 		getline(cin, nameOfManufacturer);
 	}
 
-	while (nameOfManufacturer.empty() || nameOfManufacturer.size() > MAX_NAME_LENGTH );
+	while (nameOfManufacturer.empty() || nameOfManufacturer.size() > MAX_NAME_LENGTH);
 	product.setNameOfManufacturer(nameOfManufacturer);
 }
 
@@ -365,7 +365,7 @@ string Store::enterUnit()
 		cout << "Enter the unit of the product (kg for kilograms and l for liter): ";
 		getline(cin, unit);
 	}
-	
+
 	while (unit.empty() || unit.size() > MAX_UNIT_LENGTH || strcmp(unit.c_str(), "kg") != 0 && strcmp(unit.c_str(), "l") != 0);
 	return unit;
 }
@@ -383,7 +383,7 @@ double Store::enterAvailableQuantity()
 	string availableQuantityString;
 	do
 	{
-		cout << "Enter the quantity of the product: ";	
+		cout << "Enter the quantity of the product: ";
 		getline(cin, availableQuantityString);
 		availableQuantity = stod(availableQuantityString);
 	}
@@ -401,15 +401,15 @@ void Store::enterComment(Product& product)
 	{
 		cout << "Enter a comment: ";
 		getline(cin, comment);
-	} 
-	
+	}
+
 	while (comment.empty() || comment.size() > MAX_COMMENT_LENGTH);
 	product.setComment(comment);
 }
 
 ostream& operator<<(ostream& output, const Store& store)
 {
-	output << store.products.size()<<endl;
+	output << store.products.size() << endl;
 
 	for (int i = 0; i < store.products.size(); i++)
 	{
@@ -440,7 +440,7 @@ istream& operator>>(istream& input, Store& store)
 		store.products.clear();
 	}
 
-	if (store.spaces.size() > 0) 
+	if (store.spaces.size() > 0)
 	{
 		store.spaces.clear();
 	}
@@ -454,8 +454,8 @@ istream& operator>>(istream& input, Store& store)
 	getline(input, productsSizeStr);
 	int productsSize = stoi(productsSizeStr);
 
-	for(int i = 0; i < productsSize; i++)
-	{ 
+	for (int i = 0; i < productsSize; i++)
+	{
 		Product p;
 		input >> p;
 		store.products.push_back(p);

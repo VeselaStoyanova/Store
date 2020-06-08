@@ -1,5 +1,6 @@
 ﻿#include <iostream>
 #include "ISODate.h"
+
 using namespace std;
 
 ISODate::ISODate()
@@ -135,6 +136,7 @@ bool ISODate::checkIfDateIsInISOFormat(string date)
         {
             //Използваме символа за тире от ASCII таблицата - 45. 
 			bool isDash = date[i] == 45;
+
             //Ако на място номер 4 или на място номер 7 не стоят тирета, то връщаме грешка.
 			if (!isDash) 
             {
